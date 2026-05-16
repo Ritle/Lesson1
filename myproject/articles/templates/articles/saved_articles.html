@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Избранные статьи{% endblock %}
+
+{% block content %}
+<h1>Избранные статьи</h1>
+
+{% if saved_articles %}
+    {% for saved in saved_articles %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{% url 'article_detail' saved.article.pk %}" class="text-decoration-none">{{ saved.article.title }}</a>
+            </h5>
+            <p class="card-text">{{ saved.article.content|truncatewords:20 }}</p>
+            <small class="text-muted">
+                Сохранено: {{ saved.saved_at|date:"d.m.Y H:i" }}
+            </small>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>У вас нет сохраненных статей.</p>
+{% endif %}
+{% endblock %}
